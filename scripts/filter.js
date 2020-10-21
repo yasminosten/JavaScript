@@ -4,9 +4,9 @@ let selectionButtons = document.querySelectorAll("button.selection");
 
 let allImages = document.querySelectorAll(".main .image-selections .images");
 
-let filterSearch; // select the input from the user
+let filterSearch = document.querySelector("input[name='filter']");
 
-let filterButton; // selectable button for the users input
+let filterButton = document.querySelector(".filter-button");
 
 function toggleActiveClass(active) {
 
@@ -30,19 +30,6 @@ function toggleImages(dataClass) {
 
         allImages.forEach(function (image) {
 
-            /*
-            if ( image.data.class === dataClass ) {
-
-                image.style.display = "block";
-
-            } else {
-
-                image.style.display = "none";
-
-            }
-
-            */
-
             image.dataset.class === dataClass ? image.style.display = "block" : image.style.display = "none"; // Ternary
 
         });
@@ -61,5 +48,24 @@ selectionButtons.forEach(function(item) {
         toggleImages(item.dataset.class);
 
     });
+
+});
+
+
+filterButton.addEventListener("click", () => {
+
+    let inputValue = filterSearch.value;
+    let searchItem = inputValue.toLowerCase();
+    toggleImages(searchItem);
+
+    selectionButtons.forEach( (item) => {
+
+        let dataClass = item.getAttribute("data-class");
+
+        dataClass === searchItem ? item.classList.add("active") : item.classList.remove("active");
+
+        filterSearch.value = "";
+
+    } );
 
 });
